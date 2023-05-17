@@ -1,0 +1,43 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-5">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">signup</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/signup" method="post" class="mb-3">
+                        {% csrf_token %}
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">email</label>
+                            {{form.email}}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">username</label>
+                            {{form.username}}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">password1</label>
+                            {{form.password1}}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">password2</label>
+                            {{form.password2}}
+                        </div>
+
+                        <input type="submit" value="signup" class="btn btn-primary">
+
+                    </form>
+                    <p>do you have account ?</p>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-5">Appointment List</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Doctor</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for appoinment in appoinment_list %}
+            <tr>
+                <td>{{appoinment.name}}</td>
+                <td>{{appoinment.doctor}}</td>
+                <td>{{appoinment.day}}</td>
+                <td>{{appoinment.time}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{%endblock%}
