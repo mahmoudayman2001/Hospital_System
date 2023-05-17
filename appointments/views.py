@@ -24,6 +24,7 @@ def signup (request):
 class DoctorCreateView(UserPassesTestMixin, CreateView) :
     form_class = DoctorForm
     template_name = "Doctor_form.html"
+    success_url = reverse_lazy('Doctor-create')
     def test_func(self):
         return self.request.user.is_staff
 
