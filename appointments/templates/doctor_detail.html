@@ -14,7 +14,7 @@
                     <h2>Appointments:</h2>
                     <ul class="list-group">
                         {% for appointment in appointments %}
-                        <li class="list-group-item">{{appointment.name}} - {{ appointment.day }} at {{ appointment.time}}</li>
+                        <li class="list-group-item">{{appointment.name}} - {{ appointment.date }} at {{ appointment.time}}</li>
 
                         {% empty %}
                         <li class="list-group-item">No appointments found</li>
