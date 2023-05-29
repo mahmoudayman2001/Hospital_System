@@ -56,8 +56,23 @@ class Appoinment(models.Model):
         ('13:30', '13:30'),
         ('13:45', '13:45'),
         ('14:00', '14:00'),
+        ('22:00', '22:00'),
+        ('22:15', '22:15'),
+        ('22:30', '22:30'),
+        ('22:45', '22:45'),
+        ('23:00', '23:00'),
+        
+
     ]
     time = models.CharField(choices=time, max_length=15 , default=None)
+
+    AVAILABILITY_CHOICES = [
+    ('AVAILABLE', 'Available'),
+    ('UNAVAILABLE', 'Unavailable'),
+]
+    availability = models.CharField(choices=AVAILABILITY_CHOICES, max_length=12, default='AVAILABLE')
+
+
     booked = models.BooleanField(default=False)
     duration_choices = [
         (15, _("15 minutes")),

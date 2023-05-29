@@ -3,6 +3,7 @@ from django import forms
 from .models import Doctor , Appoinment
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from datetime import date , datetime
 
 class DoctorForm(forms.ModelForm):
     class Meta:
@@ -16,6 +17,12 @@ class DoctorForm(forms.ModelForm):
 
 
 class AppoinmentForm(forms.ModelForm):
+
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'min': date.today().strftime('%Y-%m-%d')})
+    )
+
+
     class Meta :
         model = Appoinment
 
@@ -28,7 +35,7 @@ class AppoinmentForm(forms.ModelForm):
         ]   
 
         widgets = {
-            'date' : forms.DateInput(attrs={'type': 'date'})
+            'date' : forms.DateInput(attrs={'type': 'date'}),
              
 
          }

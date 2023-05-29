@@ -41,6 +41,42 @@ class AppointmentCreateView(CreateView):
     template_name = "Appoinment_form.html"
     success_url = reverse_lazy("Appoinment-create")
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # if form.fields.get('time') :
+        #     reserved_times = Appoinment.objects.filter(booked=True).values_list('time', flat=True)
+        #     choices = [(choice[0], choice[1]) for choice in form.fields['time'].choices if choice[0] not in reserved_times]
+        #     form.fields['time'].choices = choices
+
+            
+        if form.fields.get('time') :
+            current_time = datetime.now().strftime("%H:%M")
+            choices = [(choice[0], choice[1]) for choice in form.fields['time'].choices if choice[0] >= current_time]
+            form.fields['time'].choices = choices
+        return form
+    
+     
+       
+            
+            
+    # def get_form(self, form_class=None):
+    #     form = super().get_form(form_class)
+    #     if form.fields.get('time'):
+    #         current_time = datetime.now().time()
+    #         reserved_times = Appoinment.objects.filter(booked=True, time__gte=current_time).values_list('time', flat=True)
+    #         choices = [(choice[0], choice[1]) for choice in form.fields['time'].choices if choice[0] not in reserved_times]
+    #         form.fields['time'].choices = choices
+    #     return form
+    # def get_form(self, form_class=None):
+    #     form = super().get_form(form_class)
+    #     if 'time' in form.fields and form.is_bound and form.is_valid() and 'duration' in form.fields:
+    #         duration = int(form.cleaned_data['duration'])
+    #         start_time = datetime.strptime(form.cleaned_data['time'], "%H:%M")
+    #         end_time = (start_time + timedelta(minutes=duration)).strftime("%H:%M")
+    #         reserved_times = Appoinment.objects.filter(booked=True, time__range=(start_time, end_time)).values_list('time', flat=True)
+    #         choices = [(choice[0], choice[1]) for choice in form.fields['time'].choices if choice[0] not in reserved_times]
+    #         form.fields['time'].choices = choices
+    #     return form
     def form_valid(self, form):
         # Check if the appointment conflicts with existing appointments
         existing_appointments = Appoinment.objects.filter(
@@ -79,7 +115,7 @@ class AppointmentCreateView(CreateView):
         # If no conflicts and the appointment time is valid, create a new appointment
         form.instance.booked = True
         form.instance.end_time = end_time
-        return super().form_valid(form)
+        return super().form_valid(form)   
 
    
 #     def form_valid(self, form):
@@ -125,6 +161,27 @@ class DoctorDetailView(UserPassesTestMixin, DetailView):
         appointments = Appoinment.objects.filter(doctor=doctor)
         context['appointments'] = appointments
         return context
+    
+
+#app = Flask(__name__)
+
+# @app.route('/appoinment/doctor_time/<int:id>', methods=['GET'])
+
+#def doctor_time(id):
+    # doctor = Doctor.query.get_or_404(id)
+    # appointments = doctor.appointments.all()
+    
+    # appointment_list = []
+    # for appointment in appointments:
+    #     appointment_data = {
+    #         'doctor': appointment.doctor,
+    #         'time': appointment.time
+    #     }
+    #     appointment_list.append(appointment_data)
+    
+        #return jsonify("text")
+        # return render(id , 'Appoinment_form.html' , {'appointment_list':appointment_list})
+    
 
 
 
